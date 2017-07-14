@@ -53,14 +53,14 @@ public class ComplexNumberImpl implements ComplexNumber{
 
     @Override
     public ComplexNumber copy() {
-
-        return null;
+        ComplexNumber copy = new ComplexNumberImpl(re, im);
+        return copy;
     }
 
     @Override
     public ComplexNumber clone() throws CloneNotSupportedException {
-        ComplexNumber clone = this.clone();
-        return clone;
+
+        return this.copy();
     }
 
     @Override
@@ -70,7 +70,11 @@ public class ComplexNumberImpl implements ComplexNumber{
         } else if (re == 0) {
             return im + "i";
         } else {
-            return "" + re + im + "i";
+            if (im > 0) {
+                return "" + re + "+" + im + "i";
+            } else {
+                return "" + re + im + "i";
+            }
         }
     }
 
@@ -126,16 +130,24 @@ public class ComplexNumberImpl implements ComplexNumber{
 
     @Override
     public ComplexNumber negate() {
-        return null;
+        re = -re;
+        im = -im;
+        return this;
     }
 
     @Override
     public ComplexNumber add(ComplexNumber arg2) {
-        return null;
+        re += arg2.getRe();
+        im += arg2.getIm();
+        return this;
     }
 
     @Override
     public ComplexNumber multiply(ComplexNumber arg2) {
-        return null;
+        double sRe = re;
+        double sIm = im;
+        re = sRe * arg2.getRe() - sIm * arg2.getIm();
+        im = sRe * arg2.getIm() + sIm * arg2.getRe();
+        return this;
     }
 }
